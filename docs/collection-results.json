@@ -1,0 +1,130 @@
+{
+  "patterns": [
+    {
+      "id": "miura",
+      "vertices": 182,
+      "passed": true
+    },
+    {
+      "id": "twist",
+      "vertices": 16,
+      "passed": true
+    },
+    {
+      "id": "waterbomb",
+      "vertices": 440,
+      "passed": true
+    },
+    {
+      "id": "bird",
+      "vertices": 24,
+      "passed": true
+    },
+    {
+      "id": "crane",
+      "vertices": 60,
+      "passed": true
+    },
+    {
+      "id": "flat-crane",
+      "vertices": 64,
+      "passed": true
+    },
+    {
+      "id": "hypar",
+      "vertices": 97,
+      "passed": true
+    },
+    {
+      "id": "hypar-six",
+      "vertices": 151,
+      "passed": true
+    },
+    {
+      "id": "twists",
+      "vertices": 144,
+      "passed": true
+    },
+    {
+      "id": "sharp-miura",
+      "vertices": 325,
+      "passed": true
+    },
+    {
+      "id": "waterbomb-classic",
+      "vertices": 195,
+      "passed": true
+    },
+    {
+      "id": "boxes",
+      "vertices": 486,
+      "passed": true
+    },
+    {
+      "id": "weave",
+      "vertices": 512,
+      "passed": true
+    },
+    {
+      "id": "stars",
+      "vertices": 300,
+      "passed": true
+    },
+    {
+      "id": "bird-base",
+      "vertices": 13,
+      "passed": true
+    },
+    {
+      "id": "frog-base",
+      "vertices": 25,
+      "passed": true
+    },
+    {
+      "id": "boat-base",
+      "vertices": 14,
+      "passed": true
+    },
+    {
+      "id": "pinwheel",
+      "vertices": 12,
+      "passed": true
+    },
+    {
+      "id": "sink",
+      "vertices": 13,
+      "passed": true
+    },
+    {
+      "id": "square-base",
+      "vertices": 9,
+      "passed": true
+    },
+    {
+      "id": "waterbomb-base",
+      "vertices": 9,
+      "passed": true
+    },
+    {
+      "id": "vertex",
+      "vertices": 9,
+      "passed": true
+    },
+    {
+      "id": "triangle",
+      "vertices": 8,
+      "passed": true
+    },
+    {
+      "id": "map",
+      "vertices": 15,
+      "passed": true
+    },
+    {
+      "id": "brochure",
+      "vertices": 15,
+      "passed": true
+    }
+  ],
+  "errors": []
+}

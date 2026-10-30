@@ -1,0 +1,252 @@
+const patterns = [
+  {
+    "id": "miura",
+    "name": "Miura meadow",
+    "file": "Tessellations/miura-ori.svg",
+    "group": "Tessellations",
+    "sub": "Tessellations",
+    "credit": "Koryo Miura",
+    "description": "Parallelograms rise together in a linked zigzag. Watch the sheet contract in two directions as its creases close.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "twist",
+    "name": "Square twist",
+    "file": "Origami/singlesquaretwist.svg",
+    "group": "Sculptures",
+    "sub": "Sculptures",
+    "credit": "Traditional",
+    "description": "A central square turns while its surrounding panels lift. Orbit above the center to follow the rotation.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "waterbomb",
+    "name": "Waterbomb field",
+    "file": "Tessellations/huffmanWaterbomb.svg",
+    "group": "Tessellations",
+    "sub": "Tessellations",
+    "credit": "David Huffman",
+    "description": "A field of folded cells becomes a textured landscape. Follow the ridges and valleys across neighboring cells.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "bird",
+    "name": "Flapping bird",
+    "file": "Origami/flappingBird.svg",
+    "group": "Sculptures",
+    "sub": "Sculptures",
+    "credit": "Traditional",
+    "description": "A traditional flapping-bird pattern brings the wings, body and tail out of a single sheet. All creases move together in this simulation.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "crane",
+    "name": "Paper crane",
+    "file": "Origami/traditionalCrane.svg",
+    "group": "Sculptures",
+    "sub": "Sculptures",
+    "credit": "Traditional",
+    "description": "The familiar paper crane, explored as a network of simultaneous folds. Rotate the view to find its wings and long narrow points.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "flat-crane",
+    "name": "Flat crane",
+    "file": "Origami/flat_crane.svg",
+    "group": "Sculptures",
+    "sub": "Sculptures",
+    "credit": "Traditional",
+    "description": "A flatter crane configuration offers another view of this familiar crease pattern. Compare its silhouette with the three-dimensional crane.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "hypar",
+    "name": "Pleated saddle",
+    "file": "Origami/hypar.svg",
+    "group": "Sculptures",
+    "sub": "Sculptures",
+    "credit": "Upstream hypar study",
+    "description": "Alternating pleats curve a sheet into a saddle. A pattern of straight creases produces a surface that bends in opposing directions.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "hypar-six",
+    "name": "Six-point saddle",
+    "file": "Origami/6ptHypar-anti.svg",
+    "group": "Sculptures",
+    "sub": "Sculptures",
+    "credit": "Upstream hypar study",
+    "description": "A six-point variation on the pleated saddle. Orbit around the center to see how the radial folds share the motion.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "twists",
+    "name": "Twist variations",
+    "file": "Origami/squaretwistManyAngles.svg",
+    "group": "Sculptures",
+    "sub": "Sculptures",
+    "credit": "Upstream bistability study",
+    "description": "Several square twists meet in one sheet. Compare the turning panels and the folds that connect them.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "sharp-miura",
+    "name": "Sharp Miura",
+    "file": "Tessellations/miura_sharpangle.svg",
+    "group": "Tessellations",
+    "sub": "Tessellations",
+    "credit": "Koryo Miura",
+    "description": "A narrow-angle variation of the Miura pattern. Compare its long, sharp ridges with the gentler Miura meadow.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "waterbomb-classic",
+    "name": "Waterbomb tessellation",
+    "file": "Tessellations/waterbomb.svg",
+    "group": "Tessellations",
+    "sub": "Tessellations",
+    "credit": "Traditional",
+    "description": "Repeated waterbomb bases open into a cellular sheet. Watch how each cell connects to the next as the pattern contracts.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "boxes",
+    "name": "Extruded boxes",
+    "file": "Tessellations/huffmanExtrudedBoxes.svg",
+    "group": "Tessellations",
+    "sub": "Tessellations",
+    "credit": "David Huffman",
+    "description": "Raised box-like cells emerge from a repeating crease network. Look from the side to see the alternating elevations.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "weave",
+    "name": "Rectangular weave",
+    "file": "Tessellations/huffmanRectangularWeave.svg",
+    "group": "Tessellations",
+    "sub": "Tessellations",
+    "credit": "David Huffman",
+    "description": "A rectangular crease layout creates a woven appearance. Trace the crossing bands while slowly increasing the fold target.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "stars",
+    "name": "Stars & triangles",
+    "file": "Tessellations/huffmanStarsTriangles.svg",
+    "group": "Tessellations",
+    "sub": "Tessellations",
+    "credit": "David Huffman",
+    "description": "Stars and triangular facets share this repeating sheet. Look for the repeating centers and the ridges joining them.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "bird-base",
+    "name": "Bird base",
+    "file": "Bases/birdBase.svg",
+    "group": "Foundations",
+    "sub": "Foundations",
+    "credit": "Traditional",
+    "description": "A classic foundation for birds and many other models. Its long points gather around the central folds.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "frog-base",
+    "name": "Frog base",
+    "file": "Bases/frogBase.svg",
+    "group": "Foundations",
+    "sub": "Foundations",
+    "credit": "Traditional",
+    "description": "A more densely folded traditional base. Move the slider slowly to inspect the layers gathering around its center.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "boat-base",
+    "name": "Boat base",
+    "file": "Bases/boatBase.svg",
+    "group": "Foundations",
+    "sub": "Foundations",
+    "credit": "Traditional",
+    "description": "A traditional base with an elongated silhouette. View it from above and from the side to compare the arrangement of its panels.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "pinwheel",
+    "name": "Pinwheel base",
+    "file": "Bases/pinwheelBase.svg",
+    "group": "Foundations",
+    "sub": "Foundations",
+    "credit": "Traditional",
+    "description": "Creases arranged around a common center give this base a turning rhythm. Follow the four surrounding sections.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "sink",
+    "name": "Open sink",
+    "file": "Bases/openSinkBase.svg",
+    "group": "Foundations",
+    "sub": "Foundations",
+    "credit": "Traditional",
+    "description": "A central region folds inward among surrounding panels. View the model from both sides to see the indentation.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "square-base",
+    "name": "Square base",
+    "file": "Bases/squareBase.svg",
+    "group": "Foundations",
+    "sub": "Foundations",
+    "credit": "Traditional",
+    "description": "One of origami\u2019s simplest foundations. Diagonal and central creases bring a square sheet into a compact folded arrangement.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "waterbomb-base",
+    "name": "Waterbomb base",
+    "file": "Bases/waterbombBase.svg",
+    "group": "Foundations",
+    "sub": "Foundations",
+    "credit": "Traditional",
+    "description": "A small, symmetric crease pattern that underlies many larger tessellations. Compare it with the full waterbomb field.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "vertex",
+    "name": "Single vertex",
+    "file": "SimpleFolds/simpleVertex.svg",
+    "group": "Essentials",
+    "sub": "Essentials",
+    "credit": "Upstream collection",
+    "description": "Several creases meet at a single vertex. Watch how moving one group of panels requires its neighbors to move too.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "triangle",
+    "name": "Russian triangle",
+    "file": "SimpleFolds/russianTriangle.svg",
+    "group": "Essentials",
+    "sub": "Essentials",
+    "credit": "Upstream collection",
+    "description": "A compact triangular folding study. A small number of creases makes it easier to follow each panel\u2019s motion.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "map",
+    "name": "Map fold",
+    "file": "SimpleFolds/mapfold.svg",
+    "group": "Essentials",
+    "sub": "Essentials",
+    "credit": "Traditional",
+    "description": "A map-like arrangement of intersecting folds. Explore how the sheet contracts and layers as the creases close.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  },
+  {
+    "id": "brochure",
+    "name": "Brochure fold",
+    "file": "SimpleFolds/brochurefold.svg",
+    "group": "Essentials",
+    "sub": "Essentials",
+    "credit": "Traditional",
+    "description": "Parallel brochure folds divide the sheet into familiar panels. Look from the edge to see their hinge-like motion.",
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+  }
+];
