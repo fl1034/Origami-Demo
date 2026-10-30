@@ -19,7 +19,7 @@ h1{font:35px/1.13 Georgia,serif;letter-spacing:-1px;margin:20px 0}h2{font:28px/1
 .foldbox{background:var(--panel);padding:20px;border-radius:12px;margin-top:12px}.foldbox label{display:flex;justify-content:space-between;font-size:16px}output{font:28px Georgia,serif}input[type=range]{width:100%;accent-color:var(--accent);margin:18px 0}.ends{display:flex;justify-content:space-between;font-size:8px;letter-spacing:1.5px;margin-bottom:16px}.actions{justify-content:center;gap:32px}
 .icon-button{position:relative;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:10px;flex-shrink:0}.icon-button svg{width:23px;height:23px;display:block}.upload{position:relative}.upload input{display:block;position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}.upload:focus-within{outline:3px solid var(--accent);outline-offset:4px}header #importIcon{display:block}
 .notes{border-left:1px solid var(--line);border-right:0;padding:26px 22px;overflow-y:auto}.notes>.eyebrow{margin-top:0}#description{font-size:13px;line-height:1.65;margin:0 0 10px}#credit{display:block;font-size:10px}
-.finished{margin:18px 0 0}.finished img{display:block;width:100%;aspect-ratio:1.35;object-fit:contain;background:#faf0e6;border-radius:12px}.finished figcaption{font-size:9px;color:var(--muted);margin-top:8px;text-align:center}
+.finished{margin:18px 0 0}.finished img{display:block;width:100%;aspect-ratio:1.35;object-fit:contain;background:transparent;border-radius:12px}.finished figcaption{font-size:9px;color:var(--muted);margin-top:8px;text-align:center}
 .appearance{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}fieldset{margin:0 0 20px;padding:0;border:0;min-width:0}legend{font-size:12px;width:100%;padding:0;margin-bottom:12px;font-weight:600}legend span{float:right;color:var(--muted);font-size:11px;font-weight:400}
 .theme-options{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.theme-swatch{padding:0;height:39px;font:20px Georgia,serif;position:relative;border:1px solid var(--line)}.theme-swatch[aria-pressed=true]{outline:2px solid var(--accent);outline-offset:3px}
 .paper-options{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px}.paper-swatch{position:relative;padding:0;width:100%;aspect-ratio:1;border-radius:50%;background:var(--swatch)!important;border:1px solid #8888}.paper-swatch:hover{transform:scale(1.1)}.paper-swatch[aria-pressed=true]{outline:2px solid var(--accent);outline-offset:3px}
@@ -30,3 +30,6 @@ details{margin-top:10px}summary{cursor:pointer;font-size:12px}.notes details but
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 
 .brand{display:inline-flex;align-items:center;gap:9px}.crane-logo{width:38px;height:32px;flex-shrink:0}@media(max-width:600px){.crane-logo{width:30px;height:26px}.brand{gap:6px}}
+
+.notes{background:var(--panel)}
+.notes{--muted:color-mix(in srgb,var(--ink) 80%,var(--panel))}

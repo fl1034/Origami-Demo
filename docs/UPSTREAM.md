@@ -27,3 +27,5 @@ Camera framing now scales its zoom with viewport aspect ratio on initialization 
 ## Appearance and reference panel
 
 `appearance.js` owns five UI/background palettes and 48 CSS named paper swatches. CSS variables theme the page; the adapter updates the renderer background, paper material, and crease line colors. Stored selections are validated before reuse and theme/paper settings remain independent across resets, imports and pattern changes. Theme changes preserve paper/crease visibility. The camera icon downloads a PNG of the current renderer; A/B comparison and observation challenges have been removed. Pre-rendered folded references keep this UI to a single live solver.
+
+Folded reference PNGs now preserve transparency. The renderer supports an alpha channel while the interactive scene still uses the selected theme background. The reference renderer temporarily clears the scene background and captures only the projected model bounds; the panel supplies the themed background at display time.

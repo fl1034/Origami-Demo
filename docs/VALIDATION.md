@@ -45,3 +45,7 @@ Final `tests/collection_range.py` run: all 25 patterns also passed at the 80% sl
 - Preferences use localStorage with validated values and a fallback if storage is unavailable. No color-wheel inputs, external palette libraries, or backend endpoints were added.
 
 The updated existing browser smoke suite also passed all three representative patterns, resets, paper/crease switches, PNG screenshots, FOLD/OBJ exports, FOLD reimport and invalid-import recovery, with no page-level JavaScript errors.
+
+## Publishing and panel background
+
+Header branding uses the original inline crane SVG; the introduction now explains the Japanese roots of “origami.” Local browser checks passed app startup, trivia/logo presence, 25 collection entries and mobile width. GitHub Pages publishes via the repository's Actions workflow. The right panel uses the existing theme's toned panel color; reference PNGs have transparent backgrounds so they blend with it.

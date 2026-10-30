@@ -16,6 +16,8 @@ with sync_playwright() as p:
  for t in page.evaluate('studioThemes'):
   page.locator('[data-theme='+t['id']+']').click()
   assert page.frames[1].evaluate('globals.threeView.scene.background.getHexString()')==t['bg'][1:]
+  rgb=tuple(int(t['panel'][i:i+2],16) for i in (1,3,5))
+  assert page.locator('.notes').evaluate('e=>getComputedStyle(e).backgroundColor')=='rgb(%d, %d, %d)'%rgb
   assert page.evaluate('origami.getSnapshot().paperColor')=='Ivory'
   assert page.evaluate('getComputedStyle(document.body).color')!=page.evaluate('getComputedStyle(document.body).backgroundColor')
  for name in ['Coral','Rebecca Purple','Sea Green','Black','Ivory']:
