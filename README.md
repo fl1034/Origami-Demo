@@ -24,3 +24,7 @@ Appearance: choose one of five studio themes and 48 named paper colors independe
 ## GitHub Pages
 
 Pushing `main` runs `.github/workflows/pages.yml`. It publishes the static application, bundled engine and required image assets through GitHub Pages. There is no server-side application or build dependency. The workflow uses GitHub's Pages deployment environment.
+
+Models are prepared before appearing and start held still. Moving the fold slider runs a gradual, bounded solve, then holds the result. The play icon resumes another settling pass; pause stops it immediately. “Held” does not mean physically converged. During model changes, the existing paper and camera freeze until a valid replacement is ready. Reset restores the selected pattern at 35%.
+
+Phones use lower-resolution rendering without shadow maps. Idle paper does not run the solver or redraw the GPU canvas. If floating-point WebGL support is unavailable, the application displays a graphics-support message. After an update, reload the page to receive the versioned engine scripts.

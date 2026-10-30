@@ -9,17 +9,19 @@ function initThreeView(globals) {
 
     var camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 500);
     // var camera = new THREE.OrthographicCamera(window.innerWidth / -2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / -2, -10000, 10000);//-40, 40);
+    var lowPower = matchMedia('(pointer: coarse)').matches || (navigator.deviceMemory && navigator.deviceMemory <= 4);
     var renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
     // var svgRenderer = new THREE.SVGRenderer();
     var controls;
+    var animationId = null, disposed = false, renderRequested = true;
 
     init();
 
     function init() {
 
         var container = $("#threeContainer");
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.shadowMap.enabled = true;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1 : 2));
+        renderer.shadowMap.enabled = !lowPower;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.gammaOutput = true;
         renderer.toneMapping = THREE.ReinhardToneMapping;
@@ -57,7 +59,7 @@ function initThreeView(globals) {
         controls.dynamicDampingFactor = 0.3;
         controls.minDistance = 1;
 	    controls.maxDistance = 30;
-        // controls.addEventListener("change", render);
+        controls.addEventListener("change", requestRender);
 
         _render();//render before model loads
 
@@ -87,7 +89,17 @@ function initThreeView(globals) {
 
     function startAnimation(){
         console.log("starting animation");
-        renderer.animate(_loop);
+        if (animationId !== null || disposed) return;
+        function tick() {
+            if (disposed) return;
+            try { _loop(); } catch (error) {
+                globals.simulationRunning = false;
+                if (globals.onSimulationError) globals.onSimulationError(error);
+                else { window.origamiEngineError = error.message || String(error); console.error(error); }
+            }
+            if (!disposed) animationId = requestAnimationFrame(tick);
+        }
+        animationId = requestAnimationFrame(tick);
     }
 
     function pauseSimulation(){
@@ -101,7 +113,10 @@ function initThreeView(globals) {
     }
 
     var captureStats = $("#stopRecord>span");
+    function requestRender(){ renderRequested = true; }
+
     function _render(){
+        renderRequested = false;
         if (globals.vrEnabled){
             globals.vive.render();
             return;
@@ -126,27 +141,35 @@ function initThreeView(globals) {
 
     function _loop(){
         if (globals.rotateModel !== null){
+            requestRender();
             if (globals.rotateModel == "x") modelWrapper.rotateX(globals.rotationSpeed);
             if (globals.rotateModel == "y") modelWrapper.rotateY(globals.rotationSpeed);
             if (globals.rotateModel == "z") modelWrapper.rotateZ(globals.rotationSpeed);
         }
         if (globals.needsSync){
             globals.model.sync();
+            requestRender();
         }
         if (globals.simNeedsSync){
             globals.model.syncSolver();
         }
-        if (globals.simulationRunning) globals.model.step();
+        if (globals.beforeModelStep) globals.beforeModelStep();
+        if (globals.simulationRunning) {
+            globals.model.step();
+            requestRender();
+            if (globals.afterModelStep) globals.afterModelStep();
+        }
         if (globals.vrEnabled){
             _render();
             return;
         }
-        controls.update();
-        _render();
+        if (controls.enabled) controls.update();
+        if(renderRequested || globals.capturer) _render();
     }
 
     function sceneAddModel(object){
         modelWrapper.add(object);
+        requestRender();
     }
 
     function onWindowResize() {
@@ -168,6 +191,7 @@ function initThreeView(globals) {
         if (globals.shouldScaleCanvas) scale = globals.capturerScale;
         renderer.setSize(scale*window.innerWidth, scale*window.innerHeight);
         controls.handleResize();
+        requestRender();
     }
 
     function enableControls(state){
@@ -214,9 +238,30 @@ function initThreeView(globals) {
     function setBackgroundColor(color){
         if (color === undefined) color = globals.backgroundColor;
         scene.background.setStyle( "#" + color);
+        requestRender();
     }
 
+    function dispose() {
+        disposed = true;
+        if (animationId !== null) cancelAnimationFrame(animationId);
+        globals.simulationRunning = false;
+        if (controls && controls.dispose) controls.dispose();
+        var freed = new Set();
+        scene.traverse(function(object) {
+            if (object.geometry && !freed.has(object.geometry)) { freed.add(object.geometry); object.geometry.dispose(); }
+            var materials = Array.isArray(object.material) ? object.material : [object.material];
+            materials.forEach(function(material) {
+                if (!material || freed.has(material)) return;
+                freed.add(material);
+                ['map','bumpMap'].forEach(function(key) { if(material[key] && !freed.has(material[key])) {freed.add(material[key]);material[key].dispose();} });
+                material.dispose();
+            });
+        });
+        renderer.dispose(); renderer.forceContextLoss();
+    }
     return {
+        dispose: dispose,
+        requestRender: requestRender,
         sceneAddModel: sceneAddModel,
         onWindowResize: onWindowResize,
 

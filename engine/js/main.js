@@ -3,6 +3,7 @@
  */
 
 globals = {};
+window.addEventListener('error',function(event){window.origamiEngineError=event.error ? event.error.message : event.message;});
 
 function setCookie(c_name,value,exdays){var exdate=new Date();exdate.setDate(exdate.getDate() + exdays);var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());document.cookie=c_name + "=" + c_value;}
 function getCookie(c_name){var c_value = document.cookie;var c_start = c_value.indexOf(" " + c_name + "=");if (c_start == -1){c_start = c_value.indexOf(c_name + "=");}if (c_start == -1){c_value = null;}else{c_start = c_value.indexOf("=", c_start) + 1;var c_end = c_value.indexOf(";", c_start);if (c_end == -1){c_end = c_value.length;}c_value = unescape(c_value.substring(c_start,c_end));}return c_value;}
@@ -50,6 +51,11 @@ $(function() {
     }
 
     globals = initGlobals();
+    if (new URLSearchParams(location.search).has('managed')) {
+        globals.simulationRunning = false;
+        globals.creasePercent = 0;
+        globals.numSteps = 40;
+    }
     globals.threeView = initThreeView(globals);
     globals.controls = initControls(globals);
     globals.UI3D = init3DUI(globals);

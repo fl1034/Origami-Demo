@@ -9,6 +9,8 @@ function initGPUMath(){
 
     var canvas = document.getElementById("gpuMathCanvas");
     var gl = canvas.getContext("webgl", {antialias:false}) || canvas.getContext("experimental-webgl", {antialias:false});
+    canvas._origamiGL = gl;
+    if (!gl) throw Error('Your browser could not start GPU folding. Try another browser or device.');
     var floatTextures = gl.getExtension('OES_texture_float');
     if (!floatTextures) {
         notSupported();
@@ -29,7 +31,7 @@ function initGPUMath(){
                 $(elm).appendTo($("body"));
         $("#noSupportModal").modal("show");
         $("#aboutCorner").show();
-       console.warn("floating point textures are not supported on your system");
+       throw Error("Your browser cannot run GPU folding: floating-point graphics support is unavailable. Try another browser or device.");
     }
 
 
@@ -177,5 +179,14 @@ function initGPUMath(){
         this.index = 0;
     };
 
+    GPUMath.prototype.isContextLost = function(){ return gl.isContextLost(); };
+    GPUMath.prototype.dispose = function(){
+        Object.keys(this.textures).forEach(function(key){gl.deleteTexture(this.textures[key]);},this);
+        Object.keys(this.frameBuffers).forEach(function(key){gl.deleteFramebuffer(this.frameBuffers[key]);},this);
+        Object.keys(this.programs).forEach(function(key){gl.deleteProgram(this.programs[key].program);},this);
+        this.reset();
+        var extension = gl.getExtension('WEBGL_lose_context');
+        if(extension) extension.loseContext();
+    };
     return new GPUMath;
 }

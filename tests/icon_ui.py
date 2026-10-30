@@ -9,7 +9,7 @@ with sync_playwright() as p:
  page.locator('#camera').focus();assert page.locator('#control-tooltip').inner_text()=='Reset camera';page.keyboard.press('Enter');page.keyboard.press('Escape')
  page.locator('[data-view=creases]').click();assert page.frames[1].evaluate('globals.meshVisible===false && globals.edgesVisible===true')
  page.locator('[data-view=surface]').click();assert page.frames[1].evaluate('globals.meshVisible && !globals.edgesVisible')
- page.locator('#play').click();assert page.locator('#play').get_attribute('aria-label')=='Resume simulation';page.locator('#play').click()
+ page.locator('#play').click();assert page.locator('#play').get_attribute('aria-label')=='Pause folding';page.locator('#play').click()
  with page.expect_download() as shot:page.locator('#capture').click()
  assert open(shot.value.path(),'rb').read(8)==b'\x89PNG\r\n\x1a\n'
  page.locator('summary').click()

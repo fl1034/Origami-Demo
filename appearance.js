@@ -40,6 +40,7 @@ function applyAppearance(engine){
   engine.model.setMeshMaterial();
   engine.model.updateMeshVisibility();
   engine.model.updateEdgeVisibility();
+  engine.threeView.requestRender();
   engine.threeView.modelWrapper.traverse(obj=>{if(obj.isLineSegments&&obj.material?.color)obj.material.color.set(theme.muted)});
 }
 for(const t of studioThemes){const b=document.createElement('button');b.className='theme-swatch';b.dataset.theme=t.id;b.dataset.tip=t.name+' theme';b.title=t.name+' theme';b.setAttribute('aria-label',t.name+' theme');b.style.background=t.bg;b.style.color=t.ink;b.innerHTML='<span aria-hidden="true">Aa</span>';b.onclick=()=>{appearance.theme=t.id;renderAppearance()};document.querySelector('#themes').append(b)}

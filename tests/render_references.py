@@ -4,7 +4,7 @@ root=Path('/workspace/Origami-Demo')
 with sync_playwright() as p:
  b=p.chromium.launch(args=['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader']);page=b.new_page(viewport={'width':1440,'height':1000});page.goto('http://127.0.0.1:8080/Origami-Demo/');page.wait_for_function('origami.getSnapshot().patternId')
  for pat in page.evaluate('origami.patterns'):
-  page.evaluate('(id)=>origami.loadPattern(id)',pat['id']);page.locator('#fold').fill('100');page.locator('#fold').dispatch_event('input');page.wait_for_timeout(2200)
+  page.evaluate('(id)=>origami.loadPattern(id)',pat['id']);page.locator('#fold').fill('100');page.locator('#fold').dispatch_event('input');page.wait_for_function('!origami.getSnapshot().running',timeout=30000)
   data=page.evaluate('origami.geometry()');assert len(data['vertices_coords'])>0
   print('FINITE 100%',pat['id'],len(data['vertices_coords']),flush=True)
   page.evaluate('''()=>{document.documentElement.style.setProperty('background','transparent','important');document.body.style.setProperty('background','transparent','important')}''')

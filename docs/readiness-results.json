@@ -1,0 +1,155 @@
+{
+  "patterns": [
+    {
+      "id": "miura",
+      "held": true,
+      "visible": true,
+      "vertices": 182
+    },
+    {
+      "id": "twist",
+      "held": true,
+      "visible": true,
+      "vertices": 16
+    },
+    {
+      "id": "waterbomb",
+      "held": true,
+      "visible": true,
+      "vertices": 440
+    },
+    {
+      "id": "bird",
+      "held": true,
+      "visible": true,
+      "vertices": 24
+    },
+    {
+      "id": "crane",
+      "held": true,
+      "visible": true,
+      "vertices": 60
+    },
+    {
+      "id": "flat-crane",
+      "held": true,
+      "visible": true,
+      "vertices": 64
+    },
+    {
+      "id": "hypar",
+      "held": true,
+      "visible": true,
+      "vertices": 97
+    },
+    {
+      "id": "hypar-six",
+      "held": true,
+      "visible": true,
+      "vertices": 151
+    },
+    {
+      "id": "twists",
+      "held": true,
+      "visible": true,
+      "vertices": 144
+    },
+    {
+      "id": "sharp-miura",
+      "held": true,
+      "visible": true,
+      "vertices": 325
+    },
+    {
+      "id": "waterbomb-classic",
+      "held": true,
+      "visible": true,
+      "vertices": 195
+    },
+    {
+      "id": "boxes",
+      "held": true,
+      "visible": true,
+      "vertices": 486
+    },
+    {
+      "id": "weave",
+      "held": true,
+      "visible": true,
+      "vertices": 512
+    },
+    {
+      "id": "stars",
+      "held": true,
+      "visible": true,
+      "vertices": 300
+    },
+    {
+      "id": "bird-base",
+      "held": true,
+      "visible": true,
+      "vertices": 13
+    },
+    {
+      "id": "frog-base",
+      "held": true,
+      "visible": true,
+      "vertices": 25
+    },
+    {
+      "id": "boat-base",
+      "held": true,
+      "visible": true,
+      "vertices": 14
+    },
+    {
+      "id": "pinwheel",
+      "held": true,
+      "visible": true,
+      "vertices": 12
+    },
+    {
+      "id": "sink",
+      "held": true,
+      "visible": true,
+      "vertices": 13
+    },
+    {
+      "id": "square-base",
+      "held": true,
+      "visible": true,
+      "vertices": 9
+    },
+    {
+      "id": "waterbomb-base",
+      "held": true,
+      "visible": true,
+      "vertices": 9
+    },
+    {
+      "id": "vertex",
+      "held": true,
+      "visible": true,
+      "vertices": 9
+    },
+    {
+      "id": "triangle",
+      "held": true,
+      "visible": true,
+      "vertices": 8
+    },
+    {
+      "id": "map",
+      "held": true,
+      "visible": true,
+      "vertices": 15
+    },
+    {
+      "id": "brochure",
+      "held": true,
+      "visible": true,
+      "vertices": 15
+    }
+  ],
+  "errors": []
+}

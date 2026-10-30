@@ -33,3 +33,11 @@ Folded reference PNGs now preserve transparency. The renderer supports an alpha 
 ## Full fold range and matched preview pigment
 
 The slider now exposes 0–100% on all viewport sizes. Its earlier 80% cap was an application-level prototype bound, not a browser or GPU limit. The right-hand reference is rendered at 100% and recolored with an SVG component-transfer filter. The lookup tables invert the neutral render's gamma-2 / Reinhard mapping, scale each channel by the selected pigment relative to Ivory, then reapply tone mapping. Alpha and existing shading are retained. This is a lightweight color approximation of the original neutral rendering; it adds no second solver or continuous render loop. Imported references are captured neutrally with transparent background before restoring the main material.
+
+## Managed loading and bounded motion
+
+`motion.js` manages gradual target changes, bounded solve sessions (up to 120 render steps), finite/radius checks, display centering and automatic holding. New engines start paused at zero target via `?managed=1`, then prepare 35% offscreen in 30 batches of 40 solver steps. This is bounded preparation, not a convergence claim. Slider motion ramps the target by up to 2.5 percentage points per frame; holding never advances the solver.
+
+The loader freezes the previous model and camera, immediately cancels superseded staging frames, checks geometry/context readiness, and commits only after preparation. `threeView.dispose()` stops its owned animation loop and releases scene/render resources; `GPUMath.dispose()` explicitly releases the separate solver context. Both are called on replacement, cancellation and failure. A failed staged load retains the previous model. Finite but excessive deformation triggers a flat reset rather than allowing the paper to disappear.
+
+Managed preparation explicitly flushes pending model synchronization instead of relying on requestAnimationFrame in hidden iframes. A coarse pointer or low-memory hint selects a 1× render pixel ratio without shadow maps. The renderer redraws only for geometry, camera, material or background changes; idle solves and idle GPU draws stop. Unsupported floating-point contexts/framebuffers now surface an error to the parent UI. Script URLs carry a release version to avoid mixing cached engine and adapter revisions on mobile.

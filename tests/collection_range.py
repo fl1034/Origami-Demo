@@ -10,7 +10,7 @@ with sync_playwright() as p:
   try:
    page.evaluate('(id)=>origami.loadPattern(id)',pat['id']);assert page.evaluate('origami.getSnapshot().patternId')==pat['id']
    page.wait_for_timeout(700);a=page.evaluate('origami.geometry().vertices_coords')
-   page.locator('#fold').fill('100');page.locator('#fold').dispatch_event('input');page.wait_for_timeout(1000);d=page.evaluate('origami.geometry()')
+   page.locator('#fold').fill('100');page.locator('#fold').dispatch_event('input');page.wait_for_function('!origami.getSnapshot().running',timeout=30000);d=page.evaluate('origami.geometry()')
    assert all(math.isfinite(c) for v in d['vertices_coords'] for c in v)
    assert max(abs(x-y) for v,w in zip(a,d['vertices_coords']) for x,y in zip(v,w))>1e-5
    assert all(0<=i<len(d['vertices_coords']) for f in d['faces_vertices'] for i in f)

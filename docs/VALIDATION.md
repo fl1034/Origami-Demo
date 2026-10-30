@@ -55,3 +55,16 @@ Header branding uses the original inline crane SVG; the introduction now explain
 - `tests/render_references.py` exercised all 25 patterns at 100%, verified that geometry remained finite, and rendered transparent reference images at that target.
 - `tests/preview_color.py` passed: screenshot pixel-channel comparisons verified actual recoloring between Coral and Cornflower Blue; live material and preview labels agreed; selection survived theme/pattern/reset changes; a 390-pixel mobile viewport sent a target of exactly 1.0 to the engine and displayed 100%; keyboard decrement and reset worked; no page-level JavaScript errors.
 - The former 80% maximum was a prototype HTML bound. This change exposes the engine's full 0–100% target range on all screen sizes. These short browser checks do not establish convergence, collision avoidance or physical foldability. Some patterns become almost flat or tightly compressed at their full target.
+
+## Switching and mobile GPU stability
+
+The reported 1 ↔ 3 disappearance was not reproduced in the original version on Chromium/SwiftShader; six touch-driven switches remained in frame. The original did continuously simulate at rest. Inspection also found that hidden-frame loading depended on animation frames, staged loads could overlap until timer cancellation, and the solver GPU context was not explicitly released.
+
+Executed corrective checks:
+- `tests/collection_readiness.py`: all 25 models loaded within the mobile camera view and their vertices remained exactly unchanged while held. Results are in `readiness-results.json`.
+- `tests/switching_stability.py`: repeated 1 ↔ 3 plus models 10/12 under a four-context limit; old model frozen during delayed load; both old contexts explicitly lost after replacement; failed staging context preserves old model; 16 rapid requests leave one final iframe; 100% and 5% targets finish bounded solve sessions and remain unchanged; injected finite runaway resets safely. Passed without page JavaScript errors.
+- `tests/throttled_loading.py`: 1 ↔ 3 successfully loads with iframe requestAnimationFrame disabled, validating explicit initialization independent of hidden-frame animation.
+- `tests/mobile_budget.py`: coarse-pointer/DPR-3 environment uses pixel ratio 1 and disables shadow maps; no renderer draws during 600 ms idle intervals; colors, camera and folding still redraw; missing float-texture support produces a visible error and removes the failed frame.
+- Existing browser smoke suite passed all three representative models, exports, screenshots, reset and FOLD reimport. Syntax and whitespace checks passed.
+
+These are simulated mobile/browser resource conditions, not a test on the user's physical phone. The exact cause on that phone remains unconfirmed. “Held” denotes a bounded stopped solve, not convergence. The first stress-test harness emitted a pending intercepted-request cancellation on teardown; explicit route cleanup was added and the rerun completed cleanly.

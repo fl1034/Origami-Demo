@@ -22,7 +22,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site/docs
-          cp index.html lab.css lab.js icons.js appearance.js patterns.js .nojekyll _site/
+          cp index.html lab.css lab.js icons.js appearance.js patterns.js motion.js .nojekyll _site/
           cp -R engine _site/engine
           cp -R docs/finished docs/thumbs _site/docs/
           cp docs/ATTRIBUTION.md _site/ATTRIBUTION.md
