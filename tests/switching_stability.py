@@ -35,7 +35,7 @@ with sync_playwright() as p:
   assert abs(page.frames[1].evaluate('globals.creasePercent')-int(target)/100)<1e-6
   a=page.evaluate('origami.geometry().vertices_coords');page.wait_for_timeout(400);assert a==page.evaluate('origami.geometry().vertices_coords')
  print('PASS bounded target changes and exact idle geometry',flush=True)
- page.frames[1].evaluate('globals.model.getPositionsArray()[0]=1e6');page.locator('#play').click();page.wait_for_function('document.querySelector("#fold").value==="0" && !origami.getSnapshot().running');page.evaluate('origami.geometry()');assert 'instability' in page.locator('#status').inner_text()
+ page.frames[1].evaluate('globals.model.getPositionsArray()[0]=1e6');page.locator('#play').click();page.wait_for_function('!origami.getSnapshot().running');assert page.locator('#fold').input_value()=='5';assert page.evaluate('origami.geometry().vertices_coords')==a;assert 'Kept the last stable shape' in page.locator('#status').inner_text()
  print('PASS finite runaway detection and recovery',flush=True)
  page.locator('#reset').click();page.wait_for_function('!document.querySelector("#fold").disabled');assert page.locator('#fold').input_value()=='35';assert not page.evaluate('origami.getSnapshot().running')
  print('ERRORS',errors);assert not errors;b.close()

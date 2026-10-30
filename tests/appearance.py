@@ -32,7 +32,7 @@ with sync_playwright() as p:
  assert page.frames[1].evaluate('globals.color1')=='6495ed'
  assert page.frames[1].evaluate('globals.threeView.scene.background.getHexString()')=='edf2e8'
  page.wait_for_function('document.querySelector("#finishedImage").complete && document.querySelector("#finishedImage").naturalWidth>0')
- assert page.locator('#finishedImage').get_attribute('src').endswith('twist.png')
+ assert page.locator('#finishedImage').get_attribute('src').split('?')[0].endswith('twist.png')
  page.reload();page.wait_for_function('origami.getSnapshot().patternId')
  assert page.evaluate('origami.getSnapshot().theme')=='sage'
  assert page.frames[1].evaluate('globals.color1')=='6495ed'

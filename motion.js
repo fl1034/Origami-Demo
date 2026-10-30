@@ -4,6 +4,7 @@ function createMotionController(engine, onState) {
   const initial = engine.model.getPositionsArray();
   let previous = null, quiet = 0, frames = 0, target = 0, disposed = false;
   let baseRadius = 1, active = false;
+  let lastGood = new Float32Array(initial), lastGoodTarget = engine.creasePercent * 100;
   function sample() {
     const a = engine.model.getPositionsArray();
     if (!a?.length || engine.gpuMath.isContextLost() || engine.threeView.renderer.getContext().isContextLost())
@@ -30,6 +31,12 @@ function createMotionController(engine, onState) {
   }
   if (!initial?.length) throw Error('No paper geometry was loaded.');
   baseRadius = Math.max(0.1, sample().radius);
+  function remember(){
+    lastGood.set(engine.model.getPositionsArray());
+    lastGoodTarget = engine.creasePercent * 100;
+    engine.dynamicSolver.saveCheckpoint();
+  }
+  remember();
   function actual(value) { engine.setCreasePercent(value / 100); engine.shouldChangeCreasePercent = true; }
   function pause(message = 'Paused') {
     active = false;
@@ -37,12 +44,19 @@ function createMotionController(engine, onState) {
     if (!disposed) onState(false, message, target);
   }
   function fail(error) {
-    pause(error.message);
-    if (!engine.gpuMath.isContextLost()) {
-      engine.model.reset(); actual(0); target = 0; previous = null;
+    active = false;
+    engine.model.pause();
+    const lost = engine.gpuMath.isContextLost() || engine.threeView.renderer.getContext().isContextLost();
+    if(!lost){
+      // Restore solver state as well as visible geometry; never silently jump to 0%.
+      try { engine.dynamicSolver.restoreCheckpoint(); } catch (_) {}
+      engine.model.getPositionsArray().set(lastGood);
+      engine.model.getGeometry().attributes.position.needsUpdate = true;
+      actual(lastGoodTarget); previous = null;
       try { sample(); } catch (_) {}
-      onState(false, 'Fold reset to flat after instability. Try a lower target.', target);
     }
+    engine.threeView.requestRender();
+    onState(false,lost?error.message:'Could not reach '+target+'%. Kept the last stable shape; lower the target or reset.',target);
   }
   function moveTo(value) {
     target = Math.max(0, Math.min(100, Number(value)));
@@ -61,7 +75,7 @@ function createMotionController(engine, onState) {
   engine.afterModelStep = () => {
     if (!active || disposed) return;
     try {
-      const { displacement } = sample(); frames++;
+      const { displacement } = sample(); remember(); frames++;
       quiet = displacement < baseRadius * 0.00015 ? quiet + 1 : 0;
       if (Math.abs(engine.creasePercent * 100 - target) < 0.001 && ((quiet >= 8 && frames >= 20) || frames >= 120))
         pause('Held at ' + target + '%');
@@ -77,13 +91,13 @@ function createMotionController(engine, onState) {
   return {
     moveTo, pause,
     async prepare(value, signal) {
-      engine.model.pause(); engine.model.reset(); actual(0); previous = null;
+      engine.model.pause(); engine.model.reset(); actual(0); previous = null; sample(); remember();
       target = value;
       // Prepare the replacement offscreen from a flat, zero-velocity state.
       for (let i = 0; i < 30; i++) {
         if (signal.aborted) throw new DOMException('Superseded', 'AbortError');
         actual(value * Math.min(1, (i+1) / 10));
-        engine.model.step(40); sample();
+        engine.model.step(40); sample(); remember();
         await new Promise(resolve => setTimeout(resolve, 0));
       }
       pause('Held at ' + value + '%');

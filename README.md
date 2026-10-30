@@ -19,7 +19,7 @@ Simulation does not provide human folding instructions, collision detection or a
 
 The action controls use icons with hover tooltips and accessible labels. The paper uses a rough, textured material with soft self-shadows; this is a visual treatment, not added physical thickness.
 
-Appearance: choose one of five studio themes and 48 named paper colors independently. Presets use swatches, with no color-wheel control. Preferences are stored locally in your browser. Folded reference images show a 100% target and follow the selected paper color while preserving their shading. The fold slider spans 0–100% on desktop and mobile; it controls crease-angle targets, not elapsed progress or guaranteed convergence.
+Appearance: choose one of five studio themes and 48 named paper colors independently. Presets use swatches, with no color-wheel control. Preferences are stored locally in your browser. Reference images use a labeled, illustrative fold target selected for each pattern and follow the selected paper color. Some models are folding bases or simple crease studies, identified in the right panel; 100% can flatten or tightly compress those models. The fold slider spans 0–100% on desktop and mobile; it controls crease-angle targets, not elapsed progress or guaranteed convergence.
 
 ## GitHub Pages
 
@@ -28,3 +28,5 @@ Pushing `main` runs `.github/workflows/pages.yml`. It publishes the static appli
 Models are prepared before appearing and start held still. Moving the fold slider runs a gradual, bounded solve, then holds the result. The play icon resumes another settling pass; pause stops it immediately. “Held” does not mean physically converged. During model changes, the existing paper and camera freeze until a valid replacement is ready. Reset restores the selected pattern at 35%.
 
 Phones use lower-resolution rendering without shadow maps. Idle paper does not run the solver or redraw the GPU canvas. If floating-point WebGL support is unavailable, the application displays a graphics-support message. After an update, reload the page to receive the versioned engine scripts.
+
+The GPU solver requires high-precision floating-point shaders. If a solve fails, the last validated shape and requested slider target are retained; the UI explains that the target could not be reached. It no longer silently resets the slider to zero.

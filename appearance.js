@@ -62,5 +62,5 @@ function updatePreviewColor(){
     document.getElementById('paperTint'+channel).setAttribute('tableValues',values.join(' '));
   });
   const caption=document.getElementById('finishedCaption');
-  caption.textContent=caption.dataset.custom==='true'?'Imported form · '+appearance.paper:'Folded reference · '+appearance.paper+' · 100% target';
+  caption.textContent=caption.dataset.custom==='true'?'Imported form · '+appearance.paper:'Illustrative pose · '+appearance.paper+' · '+(caption.dataset.target||65)+'% target';
 }

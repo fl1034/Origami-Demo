@@ -68,3 +68,16 @@ Executed corrective checks:
 - Existing browser smoke suite passed all three representative models, exports, screenshots, reset and FOLD reimport. Syntax and whitespace checks passed.
 
 These are simulated mobile/browser resource conditions, not a test on the user's physical phone. The exact cause on that phone remains unconfirmed. “Held” denotes a bounded stopped solve, not convergence. The first stress-test harness emitted a pending intercepted-request cancellation on teardown; explicit route cleanup was added and the rerun completed cleanly.
+
+## Mobile precision and illustrative previews
+
+The user's device is a Pixel 7a running Chrome in desktop mode. Inspection found that the inherited GPU shaders requested mediump arithmetic, including a float encoder that uses 2^23; that exceeds the minimum mediump range. The shaders and float samplers now explicitly require highp, with a capability check before folding. This fixes a concrete portability defect; the exact behavior on the physical Pixel has not been directly reproduced here.
+
+Executed on Chromium with SwiftShader:
+- `tests/precision_recovery.py`: touch-enabled, DPR-3 desktop layout; models 1/3/10/12 through 80%, 20%, 100% and 35%, with finite geometry and no recovery failures. Actual GPU float encoding round-tripped 16 varied float32 inputs, including tiny signed values and 2^23, with no GL error. An injected runaway preserved the slider and exact visible checkpoint; subsequent folding to 25% succeeded. No page errors.
+- `tests/switching_stability.py`: repeated switching, four-context budget, delayed/failed staging, rapid cancellation, held geometry and checkpoint recovery passed. The former expected reset-to-zero assertion now checks preservation of the requested target and visible pose.
+- `tests/browser_smoke.py`: three representative models, paper/crease views, PNG/FOLD/OBJ downloads, reset, FOLD reimport, invalid-import handling and mobile width passed with no page errors.
+- `tests/appearance.py`: themes, 48 swatches, color/state persistence, preview switching, screenshots and mobile layout passed with no page errors.
+- All 25 illustrative reference PNGs regenerated at individually configured targets. Waterbomb and bird-base previews visually inspected. Preview captions disclose targets; base and simple-study labels distinguish them from sculptural folds. A 100% target can legitimately flatten a pattern.
+
+During development the new GPU copy helper and test probe initially set uniforms without binding their program; explicit bindings corrected this, and the final recovery/float round-trip tests above passed. JavaScript syntax and whitespace checks passed.

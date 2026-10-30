@@ -11,6 +11,9 @@ function initGPUMath(){
     var gl = canvas.getContext("webgl", {antialias:false}) || canvas.getContext("experimental-webgl", {antialias:false});
     canvas._origamiGL = gl;
     if (!gl) throw Error('Your browser could not start GPU folding. Try another browser or device.');
+    var precision = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT);
+    if (!precision || precision.precision < 23 || precision.rangeMax < 127)
+        throw Error('This browser does not provide the 32-bit GPU precision required for reliable folding.');
     var floatTextures = gl.getExtension('OES_texture_float');
     if (!floatTextures) {
         notSupported();

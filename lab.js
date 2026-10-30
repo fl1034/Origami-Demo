@@ -57,7 +57,7 @@ async function load(p,data=null){
  lock(true);status('Loading '+p.name+'…');
  const next=document.createElement('iframe'),abort=new AbortController();
  next.title='Interactive origami simulation';next.style.visibility='hidden';next.style.pointerEvents='none';next.tabIndex=-1;
- next.src='engine/index.html?managed=1&v=20261030-stability&model='+p.file;
+ next.src='engine/index.html?managed=1&v=20261030-precision&model='+p.file;
  pendingLoad={frame:next,abort};$('#viewport').append(next);
  try{
   const ng=await waitForPaper(next,abort.signal);
@@ -71,14 +71,14 @@ async function load(p,data=null){
   const old=frame;
   frame=next;g=ng;motion=nextMotion;current=p;source=data;
   frame.style.visibility='visible';frame.style.pointerEvents='';frame.tabIndex=0;g.threeView.enableControls(true);
-  $('#title').textContent=p.name;$('#name').textContent=p.name;$('#description').textContent=p.description;$('#credit').textContent='Pattern · '+(p.credit||'Local file');
+  $('#title').textContent=p.name;$('#name').textContent=p.name;$('#modelKind').textContent=p.kind||'Imported fold';$('#description').textContent=p.description;$('#credit').textContent='Pattern · '+(p.credit||'Local file');
   document.querySelectorAll('nav button').forEach(e=>{e.classList.toggle('active',e.dataset.id===p.id);e.setAttribute('aria-pressed',String(e.dataset.id===p.id))});
   setView('surface');updateReference(p);motion.pause('Held at 35%');revision++;
   disposeFrame(old);
  }catch(error){
   if(mine===token && frame===next){
    frame=previous.frame;g=previous.g;motion=previous.motion;current=previous.current;source=previous.source;
-   if(current){$('#title').textContent=current.name;$('#name').textContent=current.name;$('#description').textContent=current.description;$('#credit').textContent='Pattern · '+(current.credit||'Local file');$('#fold').value=previous.target;$('#percent').textContent=previous.target+'%';updateReference(current)}
+   if(current){$('#title').textContent=current.name;$('#name').textContent=current.name;$('#modelKind').textContent=current.kind||'Imported fold';$('#description').textContent=current.description;$('#credit').textContent='Pattern · '+(current.credit||'Local file');$('#fold').value=previous.target;$('#percent').textContent=previous.target+'%';updateReference(current)}
   }
   disposeFrame(next);
   if(mine===token && error.name!=='AbortError')status(error.message);
@@ -89,7 +89,7 @@ async function load(p,data=null){
 function validate(d){const fail=()=>{throw Error('Use a FOLD file with finite vertices, valid faces, edges and M/V/B/F assignments (maximum 1,000 vertices).')};if(!d||!Array.isArray(d.vertices_coords)||!d.vertices_coords.length||d.vertices_coords.length>1000||!Array.isArray(d.edges_vertices)||!Array.isArray(d.faces_vertices)||!d.faces_vertices.length||d.edges_vertices.length>3000||d.faces_vertices.length>2000)fail();let n=d.vertices_coords.length;for(const v of d.vertices_coords)if(!Array.isArray(v)||![2,3].includes(v.length)||!v.every(Number.isFinite))fail();for(const [arr,min,max] of [[d.edges_vertices,2,2],[d.faces_vertices,3,12]])for(const a of arr)if(!Array.isArray(a)||a.length<min||a.length>max||new Set(a).size!==a.length||!a.every(i=>Number.isInteger(i)&&i>=0&&i<n))fail();if(!Array.isArray(d.edges_assignment)||d.edges_assignment.length!==d.edges_vertices.length||!d.edges_assignment.every(a=>['M','V','B','F'].includes(a)))fail();if(d.edges_foldAngle&&(!Array.isArray(d.edges_foldAngle)||d.edges_foldAngle.length!==d.edges_vertices.length||!d.edges_foldAngle.every(a=>a===null||(Number.isFinite(a)&&Math.abs(a)<=180))))fail();return d}
 function geometry(){const a=finite(),d=structuredClone(g.pattern.getFoldData(false));d.vertices_coords=Array.from({length:a.length/3},(_,i)=>Array.from(a.slice(i*3,i*3+3)));d.file_spec=1.1;d.frame_classes=['foldedForm'];return d}
 function download(text,ext){const url=URL.createObjectURL(new Blob([text],{type:'application/octet-stream'}));const a=document.createElement('a');a.href=url;a.download='origami-lab.'+ext;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function renderCollection(){const q=$('#search').value.toLowerCase();$('nav').replaceChildren();patterns.filter(p=>(p.name+' '+p.group).toLowerCase().includes(q)).forEach(p=>{const b=document.createElement('button');b.dataset.id=p.id;b.className='pattern-icon'+(current?.id===p.id?' active':'');b.title=p.name;b.setAttribute('aria-label',p.name);b.setAttribute('aria-pressed',String(current?.id===p.id));b.dataset.tip=p.name;const img=new Image();img.src='docs/thumbs/'+p.id+'.png';img.alt='';img.onerror=()=>{img.remove();b.append(document.createTextNode('◇'))};b.append(img);b.onclick=()=>load(p);$('nav').append(b)});$('#count').textContent=patterns.length+' PAPER STUDIES'}
+function renderCollection(){const q=$('#search').value.toLowerCase();$('nav').replaceChildren();patterns.filter(p=>(p.name+' '+p.group).toLowerCase().includes(q)).forEach(p=>{const b=document.createElement('button');b.dataset.id=p.id;b.className='pattern-icon'+(current?.id===p.id?' active':'');b.title=p.name+' — '+p.kind;b.setAttribute('aria-label',p.name);b.setAttribute('aria-pressed',String(current?.id===p.id));b.dataset.tip=p.name+' — '+p.kind;const img=new Image();img.src='docs/thumbs/'+p.id+'.png';img.alt='';img.onerror=()=>{img.remove();b.append(document.createTextNode('◇'))};b.append(img);b.onclick=()=>load(p);$('nav').append(b)});$('#count').textContent=patterns.length+' PAPER STUDIES'}
 $('#search').oninput=renderCollection;renderCollection();
 $('#fold').oninput=e=>setFold(+e.target.value);$('#play').onclick=()=>setRunning(!running);$('#reset').onclick=()=>load(current,source);$('#camera').onclick=()=>{g.threeView.resetCamera();g.threeView.setCameraIso()};document.querySelectorAll('[data-view]').forEach(e=>e.onclick=()=>setView(e.dataset.view));
 $('#capture').onclick=()=>{try{finite();const r=g.threeView.renderer;r.render(g.threeView.scene,g.threeView.camera);r.domElement.toBlob(blob=>{if(!blob){status('Screenshot unavailable. Please try again.');return}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=current.id+'-'+$('#fold').value+'-percent.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status('Screenshot saved')},'image/png')}catch(e){status(e.message)}};
@@ -102,10 +102,11 @@ window.origami={patterns,loadPattern:id=>load(patterns.find(p=>p.id===id)),valid
 function updateReference(p){
  const img=$('#finishedImage');img.onerror=null;
  $('#finishedCaption').dataset.custom=String(p.id==='custom');
+ $('#finishedCaption').dataset.target=p.previewTarget||65;
  if(p.id==='custom'){
    const view=g.threeView,background=view.scene.background,color1=g.color1,color2=g.color2;
    try{g.color1='fffff0';g.color2='d1d1c5';g.model.setMeshMaterial();view.scene.background=null;view.renderer.setClearColor(0,0);view.renderer.render(view.scene,view.camera);img.src=view.renderer.domElement.toDataURL('image/png');img.alt='Imported geometry'}
    finally{g.color1=color1;g.color2=color2;g.model.setMeshMaterial();view.scene.background=background;view.renderer.render(view.scene,view.camera)}
- }else{img.src='docs/finished/'+p.id+'.png';img.alt=p.name+' folded reference at 100% target'}
+ }else{img.src='docs/finished/'+p.id+'.png?v=20261030-precision';img.alt=p.name+' illustrative fold at '+p.previewTarget+'% target'}
  updatePreviewColor();
 }

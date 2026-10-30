@@ -7,7 +7,9 @@ const patterns = [
     "sub": "Tessellations",
     "credit": "Koryo Miura",
     "description": "Parallelograms rise together in a linked zigzag. Watch the sheet contract in two directions as its creases close.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 65,
+    "kind": "Tessellation"
   },
   {
     "id": "twist",
@@ -17,7 +19,9 @@ const patterns = [
     "sub": "Sculptures",
     "credit": "Traditional",
     "description": "A central square turns while its surrounding panels lift. Orbit above the center to follow the rotation.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 65,
+    "kind": "Sculptural fold"
   },
   {
     "id": "waterbomb",
@@ -27,7 +31,9 @@ const patterns = [
     "sub": "Tessellations",
     "credit": "David Huffman",
     "description": "A field of folded cells becomes a textured landscape. Follow the ridges and valleys across neighboring cells.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 55,
+    "kind": "Tessellation"
   },
   {
     "id": "bird",
@@ -37,7 +43,9 @@ const patterns = [
     "sub": "Sculptures",
     "credit": "Traditional",
     "description": "A traditional flapping-bird pattern brings the wings, body and tail out of a single sheet. All creases move together in this simulation.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 80,
+    "kind": "Sculptural fold"
   },
   {
     "id": "crane",
@@ -47,7 +55,9 @@ const patterns = [
     "sub": "Sculptures",
     "credit": "Traditional",
     "description": "The familiar paper crane, explored as a network of simultaneous folds. Rotate the view to find its wings and long narrow points.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 80,
+    "kind": "Sculptural fold"
   },
   {
     "id": "flat-crane",
@@ -57,7 +67,9 @@ const patterns = [
     "sub": "Sculptures",
     "credit": "Traditional",
     "description": "A flatter crane configuration offers another view of this familiar crease pattern. Compare its silhouette with the three-dimensional crane.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 65,
+    "kind": "Sculptural fold"
   },
   {
     "id": "hypar",
@@ -67,7 +79,9 @@ const patterns = [
     "sub": "Sculptures",
     "credit": "Upstream hypar study",
     "description": "Alternating pleats curve a sheet into a saddle. A pattern of straight creases produces a surface that bends in opposing directions.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 65,
+    "kind": "Sculptural fold"
   },
   {
     "id": "hypar-six",
@@ -77,7 +91,9 @@ const patterns = [
     "sub": "Sculptures",
     "credit": "Upstream hypar study",
     "description": "A six-point variation on the pleated saddle. Orbit around the center to see how the radial folds share the motion.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 60,
+    "kind": "Sculptural fold"
   },
   {
     "id": "twists",
@@ -87,7 +103,9 @@ const patterns = [
     "sub": "Sculptures",
     "credit": "Upstream bistability study",
     "description": "Several square twists meet in one sheet. Compare the turning panels and the folds that connect them.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 60,
+    "kind": "Sculptural fold"
   },
   {
     "id": "sharp-miura",
@@ -97,7 +115,9 @@ const patterns = [
     "sub": "Tessellations",
     "credit": "Koryo Miura",
     "description": "A narrow-angle variation of the Miura pattern. Compare its long, sharp ridges with the gentler Miura meadow.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 55,
+    "kind": "Tessellation"
   },
   {
     "id": "waterbomb-classic",
@@ -107,7 +127,9 @@ const patterns = [
     "sub": "Tessellations",
     "credit": "Traditional",
     "description": "Repeated waterbomb bases open into a cellular sheet. Watch how each cell connects to the next as the pattern contracts.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 60,
+    "kind": "Tessellation"
   },
   {
     "id": "boxes",
@@ -117,7 +139,9 @@ const patterns = [
     "sub": "Tessellations",
     "credit": "David Huffman",
     "description": "Raised box-like cells emerge from a repeating crease network. Look from the side to see the alternating elevations.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 65,
+    "kind": "Tessellation"
   },
   {
     "id": "weave",
@@ -127,7 +151,9 @@ const patterns = [
     "sub": "Tessellations",
     "credit": "David Huffman",
     "description": "A rectangular crease layout creates a woven appearance. Trace the crossing bands while slowly increasing the fold target.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 60,
+    "kind": "Tessellation"
   },
   {
     "id": "stars",
@@ -137,7 +163,9 @@ const patterns = [
     "sub": "Tessellations",
     "credit": "David Huffman",
     "description": "Stars and triangular facets share this repeating sheet. Look for the repeating centers and the ridges joining them.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 60,
+    "kind": "Tessellation"
   },
   {
     "id": "bird-base",
@@ -147,7 +175,9 @@ const patterns = [
     "sub": "Foundations",
     "credit": "Traditional",
     "description": "A classic foundation for birds and many other models. Its long points gather around the central folds.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 75,
+    "kind": "Folding base"
   },
   {
     "id": "frog-base",
@@ -157,7 +187,9 @@ const patterns = [
     "sub": "Foundations",
     "credit": "Traditional",
     "description": "A more densely folded traditional base. Move the slider slowly to inspect the layers gathering around its center.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 70,
+    "kind": "Folding base"
   },
   {
     "id": "boat-base",
@@ -167,7 +199,9 @@ const patterns = [
     "sub": "Foundations",
     "credit": "Traditional",
     "description": "A traditional base with an elongated silhouette. View it from above and from the side to compare the arrangement of its panels.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 65,
+    "kind": "Folding base"
   },
   {
     "id": "pinwheel",
@@ -177,7 +211,9 @@ const patterns = [
     "sub": "Foundations",
     "credit": "Traditional",
     "description": "Creases arranged around a common center give this base a turning rhythm. Follow the four surrounding sections.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 60,
+    "kind": "Folding base"
   },
   {
     "id": "sink",
@@ -187,7 +223,9 @@ const patterns = [
     "sub": "Foundations",
     "credit": "Traditional",
     "description": "A central region folds inward among surrounding panels. View the model from both sides to see the indentation.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 55,
+    "kind": "Folding base"
   },
   {
     "id": "square-base",
@@ -197,7 +235,9 @@ const patterns = [
     "sub": "Foundations",
     "credit": "Traditional",
     "description": "One of origami\u2019s simplest foundations. Diagonal and central creases bring a square sheet into a compact folded arrangement.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 65,
+    "kind": "Folding base"
   },
   {
     "id": "waterbomb-base",
@@ -207,7 +247,9 @@ const patterns = [
     "sub": "Foundations",
     "credit": "Traditional",
     "description": "A small, symmetric crease pattern that underlies many larger tessellations. Compare it with the full waterbomb field.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 65,
+    "kind": "Folding base"
   },
   {
     "id": "vertex",
@@ -217,7 +259,9 @@ const patterns = [
     "sub": "Essentials",
     "credit": "Upstream collection",
     "description": "Several creases meet at a single vertex. Watch how moving one group of panels requires its neighbors to move too.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 60,
+    "kind": "Simple folding study"
   },
   {
     "id": "triangle",
@@ -227,7 +271,9 @@ const patterns = [
     "sub": "Essentials",
     "credit": "Upstream collection",
     "description": "A compact triangular folding study. A small number of creases makes it easier to follow each panel\u2019s motion.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 70,
+    "kind": "Simple folding study"
   },
   {
     "id": "map",
@@ -237,7 +283,9 @@ const patterns = [
     "sub": "Essentials",
     "credit": "Traditional",
     "description": "A map-like arrangement of intersecting folds. Explore how the sheet contracts and layers as the creases close.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 60,
+    "kind": "Simple folding study"
   },
   {
     "id": "brochure",
@@ -247,6 +295,8 @@ const patterns = [
     "sub": "Essentials",
     "credit": "Traditional",
     "description": "Parallel brochure folds divide the sheet into familiar panels. Look from the edge to see their hinge-like motion.",
-    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle."
+    "challenge": "Capture the sheet at 15% and 60%. Compare its silhouette from the same camera angle.",
+    "previewTarget": 65,
+    "kind": "Simple folding study"
   }
 ];

@@ -37,7 +37,10 @@ function initDynamicSolver(globals){
     var theta;//[theta, w, normalIndex1, normalIndex2]
     var lastTheta;//[theta, w, normalIndex1, normalIndex2]
 
+    var checkpointReady = false, checkpointAllocated = false;
+
     function syncNodesAndEdges(){
+        checkpointReady = checkpointAllocated = false;
         nodes = globals.model.getNodes();
         edges = globals.model.getEdges();
         faces = globals.model.getFaces();
@@ -69,6 +72,43 @@ function initDynamicSolver(globals){
         globals.gpuMath.step("zeroThetaTexture", ["u_lastTheta"], "u_theta");
         globals.gpuMath.step("zeroThetaTexture", ["u_theta"], "u_lastTheta");
         render();
+    }
+
+    // Preserve the last validated pose without resetting the user's target.
+    function copyState(source, destination, dim){
+        var gpu = globals.gpuMath;
+        gpu.setProgram("copyTexture");
+        gpu.setUniformForProgram("copyTexture", "u_textureDim", [dim,dim], "2f");
+        gpu.setSize(dim,dim);
+        gpu.step("copyTexture", [source], destination);
+    }
+    function saveCheckpoint(){
+        var gpu = globals.gpuMath;
+        if(!checkpointAllocated){
+            gpu.initTextureFromData("checkpointPosition",textureDim,textureDim,"FLOAT",null,true);
+            gpu.initFrameBufferForTexture("checkpointPosition",true);
+            gpu.initTextureFromData("checkpointTheta",textureDimCreases,textureDimCreases,"FLOAT",null,true);
+            gpu.initFrameBufferForTexture("checkpointTheta",true);
+            checkpointAllocated = true;
+        }
+        copyState("u_lastPosition","checkpointPosition",textureDim);
+        copyState("u_lastTheta","checkpointTheta",textureDimCreases);
+        gpu.setProgram("copyTexture");
+        gpu.setUniformForProgram("copyTexture","u_textureDim",[textureDim,textureDim],"2f");
+        checkpointReady = true;
+    }
+    function restoreCheckpoint(){
+        if(!checkpointReady || globals.gpuMath.isContextLost())return false;
+        var gpu = globals.gpuMath;
+        ["u_position","u_lastPosition","u_lastLastPosition"].forEach(function(name){copyState("checkpointPosition",name,textureDim);});
+        ["u_theta","u_lastTheta"].forEach(function(name){copyState("checkpointTheta",name,textureDimCreases);});
+        gpu.setSize(textureDim,textureDim);
+        gpu.step("zeroTexture",[],"u_velocity");
+        gpu.step("zeroTexture",[],"u_lastVelocity");
+        gpu.setProgram("copyTexture");
+        gpu.setUniformForProgram("copyTexture","u_textureDim",[textureDim,textureDim],"2f");
+        render();
+        return true;
     }
 
     function solve(_numSteps){
@@ -662,6 +702,8 @@ function initDynamicSolver(globals){
         updateFixed: updateFixed,
         solve: solve,
         render: render,
-        reset: reset
+        reset: reset,
+        saveCheckpoint: saveCheckpoint,
+        restoreCheckpoint: restoreCheckpoint
     }
 }
