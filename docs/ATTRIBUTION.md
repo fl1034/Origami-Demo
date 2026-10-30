@@ -47,6 +47,6 @@ Paper grain is generated procedurally by Origami Lab; no external texture or ima
 
 Paper colors use the standardized keyword/hex mappings in [W3C CSS Color 4: Named Colors](https://www.w3.org/TR/css-color-4/#named-colors) (checked 2026-10-30). The UI adds spaces for readability, e.g. “Rebecca Purple” maps to `rebeccapurple` (`#663399`). Five studio palettes—Linen, Sage, Rose, Slate and Midnight—are custom coordinated combinations, not claims of standardized theme names. No runtime request is made to the specification or any palette service.
 
-`docs/finished/` contains browser captures of all 25 simulated patterns at an 80% fold target, rendered with neutral paper. These are illustrative folded references, not convergence or fabrication guarantees.
+`docs/finished/` contains browser captures of all 25 simulated patterns at a 100% fold target, rendered with neutral paper. These are illustrative folded references, not convergence or fabrication guarantees.
 
 The header crane is an original inline SVG illustration created for Origami Lab.

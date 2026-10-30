@@ -49,3 +49,9 @@ The updated existing browser smoke suite also passed all three representative pa
 ## Publishing and panel background
 
 Header branding uses the original inline crane SVG; the introduction now explains the Japanese roots of “origami.” Local browser checks passed app startup, trivia/logo presence, 25 collection entries and mobile width. GitHub Pages publishes via the repository's Actions workflow. The right panel uses the existing theme's toned panel color; reference PNGs have transparent backgrounds so they blend with it.
+
+## Preview color and 100% target
+
+- `tests/render_references.py` exercised all 25 patterns at 100%, verified that geometry remained finite, and rendered transparent reference images at that target.
+- `tests/preview_color.py` passed: screenshot pixel-channel comparisons verified actual recoloring between Coral and Cornflower Blue; live material and preview labels agreed; selection survived theme/pattern/reset changes; a 390-pixel mobile viewport sent a target of exactly 1.0 to the engine and displayed 100%; keyboard decrement and reset worked; no page-level JavaScript errors.
+- The former 80% maximum was a prototype HTML bound. This change exposes the engine's full 0–100% target range on all screen sizes. These short browser checks do not establish convergence, collision avoidance or physical foldability. Some patterns become almost flat or tightly compressed at their full target.

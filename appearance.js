@@ -29,7 +29,7 @@ function renderAppearance(){
   document.querySelector('#paperName').textContent=appearance.paper;
   document.querySelectorAll('[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.theme===appearance.theme)));
   document.querySelectorAll('[data-paper]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.paper===appearance.paper)));
-  saveAppearance();if(appearance.onChange)appearance.onChange();
+  updatePreviewColor();saveAppearance();if(appearance.onChange)appearance.onChange();
 }
 function applyAppearance(engine){
   const theme=studioThemes.find(t=>t.id===appearance.theme),hex=paperSwatches.find(p=>p[0]===appearance.paper)[1];
@@ -45,3 +45,21 @@ function applyAppearance(engine){
 for(const t of studioThemes){const b=document.createElement('button');b.className='theme-swatch';b.dataset.theme=t.id;b.dataset.tip=t.name+' theme';b.title=t.name+' theme';b.setAttribute('aria-label',t.name+' theme');b.style.background=t.bg;b.style.color=t.ink;b.innerHTML='<span aria-hidden="true">Aa</span>';b.onclick=()=>{appearance.theme=t.id;renderAppearance()};document.querySelector('#themes').append(b)}
 for(const [name,hex] of paperSwatches){const b=document.createElement('button');b.className='paper-swatch';b.dataset.paper=name;b.dataset.tip=name;b.title=name;b.setAttribute('aria-label',name+' paper');b.style.setProperty('--swatch','#'+hex);b.onclick=()=>{appearance.paper=name;renderAppearance()};document.querySelector('#paperColors').append(b)}
 renderAppearance();
+
+// Recolor the neutral render while preserving its shading and transparent alpha.
+// Invert/reapply the engine's Reinhard tone map and gamma-2 output per channel.
+function updatePreviewColor(){
+  const hex=paperSwatches.find(p=>p[0]===appearance.paper)[1];
+  const pigment=hex.match(/../g).map(h=>parseInt(h,16)/255),neutral=[1,1,240/255];
+  ['R','G','B'].forEach((channel,k)=>{
+    const values=Array.from({length:256},(_,i)=>{
+      const linear=Math.pow(i/255,2);
+      if(linear===1)return pigment[k]===0?'0':'1';
+      const radiance=linear/(1-linear)*pigment[k]/neutral[k];
+      return Math.sqrt(radiance/(1+radiance)).toFixed(6);
+    });
+    document.getElementById('paperTint'+channel).setAttribute('tableValues',values.join(' '));
+  });
+  const caption=document.getElementById('finishedCaption');
+  caption.textContent=caption.dataset.custom==='true'?'Imported form · '+appearance.paper:'Folded reference · '+appearance.paper+' · 100% target';
+}

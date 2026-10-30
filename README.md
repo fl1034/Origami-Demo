@@ -19,7 +19,7 @@ Simulation does not provide human folding instructions, collision detection or a
 
 The action controls use icons with hover tooltips and accessible labels. The paper uses a rough, textured material with soft self-shadows; this is a visual treatment, not added physical thickness.
 
-Appearance: choose one of five studio themes and 48 named paper colors independently. Presets use swatches, with no color-wheel control. Preferences are stored locally in your browser. Folded reference images use neutral paper at an 80% target; they do not change when the live paper color changes.
+Appearance: choose one of five studio themes and 48 named paper colors independently. Presets use swatches, with no color-wheel control. Preferences are stored locally in your browser. Folded reference images show a 100% target and follow the selected paper color while preserving their shading. The fold slider spans 0–100% on desktop and mobile; it controls crease-angle targets, not elapsed progress or guaranteed convergence.
 
 ## GitHub Pages
 

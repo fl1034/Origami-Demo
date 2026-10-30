@@ -20,4 +20,13 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden&&g)setRunni
 appearance.onChange=()=>{if(g)applyAppearance(g)};
 window.origami={patterns,loadPattern:id=>load(patterns.find(p=>p.id===id)),validate,getSnapshot:()=>({schemaVersion:1,revision,patternId:current?.id,status:$('#fold').disabled?'loading':(running?'running':'paused'),foldTargetPercent:+$('#fold').value,running,viewMode:mode,theme:appearance.theme,paperColor:appearance.paper,metrics:null}),geometry};load(patterns[0]);
 
-function updateReference(p){const img=$('#finishedImage');img.onerror=null;if(p.id==='custom'){const r=g.threeView.renderer;r.render(g.threeView.scene,g.threeView.camera);img.src=r.domElement.toDataURL('image/png');img.alt='Imported geometry';$('#finishedCaption').textContent='Imported form · initial geometry'}else{img.src='docs/finished/'+p.id+'.png';img.alt=p.name+' folded reference at 80% target';$('#finishedCaption').textContent='Folded reference · ivory paper · 80% target'}}
+function updateReference(p){
+ const img=$('#finishedImage');img.onerror=null;
+ $('#finishedCaption').dataset.custom=String(p.id==='custom');
+ if(p.id==='custom'){
+   const view=g.threeView,background=view.scene.background,color1=g.color1,color2=g.color2;
+   try{g.color1='fffff0';g.color2='d1d1c5';g.model.setMeshMaterial();view.scene.background=null;view.renderer.setClearColor(0,0);view.renderer.render(view.scene,view.camera);img.src=view.renderer.domElement.toDataURL('image/png');img.alt='Imported geometry'}
+   finally{g.color1=color1;g.color2=color2;g.model.setMeshMaterial();view.scene.background=background;view.renderer.render(view.scene,view.camera)}
+ }else{img.src='docs/finished/'+p.id+'.png';img.alt=p.name+' folded reference at 100% target'}
+ updatePreviewColor();
+}
